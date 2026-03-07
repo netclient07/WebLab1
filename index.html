@@ -34,9 +34,7 @@
           <span class="badge" id="cartCount">0</span>
         </div>
 
-        <ul class="cart-list" id="cartList" aria-live="polite">
-          <li class="cart-item">Корзина пуста</li>
-        </ul>
+        <ul class="cart-list" id="cartList" aria-live="polite"></ul>
 
         <div class="cart-summary">
           <p>Итого:</p>
@@ -57,6 +55,22 @@
           Добавить в корзину
         </button>
       </article>
+    </template>
+
+    <template id="cartItemTemplate">
+      <li class="cart-item">
+        <div class="cart-item-info">
+          <h3 class="cart-item-title"></h3>
+          <p class="cart-item-price"></p>
+        </div>
+        <div class="cart-item-controls">
+          <label>
+            Кол-во
+            <input class="qty-input" type="number" min="1" step="1" value="1" />
+          </label>
+          <button class="remove-btn" type="button">Удалить</button>
+        </div>
+      </li>
     </template>
 
     <script src="script.js"></script>
