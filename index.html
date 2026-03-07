@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimal Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <h1 class="site-title">Minimal Store</h1>
+        <p class="site-subtitle">Каталог товаров и удобная корзина</p>
+      </div>
+    </header>
+
+    <main class="container layout">
+      <section class="products-section" aria-labelledby="products-title">
+        <div class="section-head">
+          <h2 id="products-title">Товары</h2>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+      </section>
+
+      <aside class="cart-section" aria-labelledby="cart-title">
+        <div class="cart-head">
+          <h2 id="cart-title">Корзина</h2>
+          <span class="badge" id="cartCount">0</span>
+        </div>
+
+        <ul class="cart-list" id="cartList" aria-live="polite">
+          <li class="cart-item">Корзина пуста</li>
+        </ul>
+
+        <div class="cart-summary">
+          <p>Итого:</p>
+          <strong id="totalPrice">0 ₽</strong>
+        </div>
+
+        <button id="checkoutBtn" class="primary-btn" type="button">
+          Оформить заказ
+        </button>
+      </aside>
+    </main>
+
+    <template id="productCardTemplate">
+      <article class="product-card">
+        <h3 class="product-title"></h3>
+        <p class="product-price"></p>
+        <button class="secondary-btn add-to-cart-btn" type="button">
+          Добавить в корзину
+        </button>
+      </article>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>
