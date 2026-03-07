@@ -120,6 +120,8 @@ p {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
+  max-height: 55vh;
+  overflow: auto;
 }
 
 .cart-item {

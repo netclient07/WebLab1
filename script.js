@@ -9,6 +9,8 @@ const PRODUCTS = [
   { id: "p8", title: "Настольная LED-лампа", price: 1990 }
 ];
 
+const CART_STORAGE_KEY = "minimal_store_cart_v1";
+
 const productsGrid = document.getElementById("productsGrid");
 const cartList = document.getElementById("cartList");
 const cartCount = document.getElementById("cartCount");
@@ -17,10 +19,28 @@ const totalPrice = document.getElementById("totalPrice");
 const productTemplate = document.getElementById("productCardTemplate");
 const cartItemTemplate = document.getElementById("cartItemTemplate");
 
-let cart = {};
+let cart = loadCart();
 
 function formatPrice(value) {
   return `${value.toLocaleString("ru-RU")} ₽`;
+}
+
+function loadCart() {
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY);
+    if (!raw) {
+      return {};
+    }
+
+    const parsed = JSON.parse(raw);
+    return typeof parsed === "object" && parsed !== null ? parsed : {};
+  } catch (error) {
+    return {};
+  }
+}
+
+function saveCart() {
+  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
 }
 
 function renderProducts() {
@@ -52,11 +72,13 @@ function getCartItems() {
 
 function addToCart(productId) {
   cart[productId] = (Number(cart[productId]) || 0) + 1;
+  saveCart();
   renderCart();
 }
 
 function removeFromCart(productId) {
   delete cart[productId];
+  saveCart();
   renderCart();
 }
 
@@ -64,6 +86,7 @@ function updateQuantity(productId, quantity) {
   const normalized = Number.isFinite(quantity) ? Math.floor(quantity) : 1;
   const safeQuantity = Math.max(1, normalized);
   cart[productId] = safeQuantity;
+  saveCart();
   renderCart();
 }
 
