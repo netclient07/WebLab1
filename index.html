@@ -47,6 +47,41 @@
       </aside>
     </main>
 
+    <div class="modal hidden" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-content">
+        <button class="icon-btn" type="button" data-close-modal aria-label="Закрыть форму">
+          ×
+        </button>
+        <h2 id="checkoutTitle">Оформление заказа</h2>
+
+        <form id="orderForm" class="order-form">
+          <label>
+            Имя
+            <input type="text" name="firstName" required />
+          </label>
+
+          <label>
+            Фамилия
+            <input type="text" name="lastName" required />
+          </label>
+
+          <label>
+            Адрес доставки
+            <textarea name="address" rows="3" required></textarea>
+          </label>
+
+          <label>
+            Контактный номер телефона
+            <input type="tel" name="phone" required />
+          </label>
+
+          <button class="primary-btn" type="submit">Создать заказ</button>
+          <p class="success-message hidden" id="successMessage">Заказ создан!</p>
+        </form>
+      </div>
+    </div>
+
     <template id="productCardTemplate">
       <article class="product-card">
         <h3 class="product-title"></h3>
