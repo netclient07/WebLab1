@@ -15,6 +15,10 @@ const productsGrid = document.getElementById("productsGrid");
 const cartList = document.getElementById("cartList");
 const cartCount = document.getElementById("cartCount");
 const totalPrice = document.getElementById("totalPrice");
+const checkoutBtn = document.getElementById("checkoutBtn");
+const checkoutModal = document.getElementById("checkoutModal");
+const orderForm = document.getElementById("orderForm");
+const successMessage = document.getElementById("successMessage");
 
 const productTemplate = document.getElementById("productCardTemplate");
 const cartItemTemplate = document.getElementById("cartItemTemplate");
@@ -28,10 +32,7 @@ function formatPrice(value) {
 function loadCart() {
   try {
     const raw = localStorage.getItem(CART_STORAGE_KEY);
-    if (!raw) {
-      return {};
-    }
-
+    if (!raw) return {};
     const parsed = JSON.parse(raw);
     return typeof parsed === "object" && parsed !== null ? parsed : {};
   } catch (error) {
@@ -61,10 +62,7 @@ function getCartItems() {
   return Object.entries(cart)
     .map(([id, quantity]) => {
       const product = PRODUCTS.find((item) => item.id === id);
-      if (!product) {
-        return null;
-      }
-
+      if (!product) return null;
       return { product, quantity: Number(quantity) || 0 };
     })
     .filter((entry) => entry && entry.quantity > 0);
@@ -129,5 +127,48 @@ function renderCart() {
   totalPrice.textContent = formatPrice(totalCost);
 }
 
+function openModal() {
+  checkoutModal.classList.remove("hidden");
+}
+
+function closeModal() {
+  checkoutModal.classList.add("hidden");
+  successMessage.classList.add("hidden");
+}
+
+function setupModalEvents() {
+  checkoutBtn.addEventListener("click", openModal);
+
+  checkoutModal.querySelectorAll("[data-close-modal]").forEach((button) => {
+    button.addEventListener("click", closeModal);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !checkoutModal.classList.contains("hidden")) {
+      closeModal();
+    }
+  });
+}
+
+function setupForm() {
+  orderForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (!orderForm.checkValidity()) {
+      orderForm.reportValidity();
+      return;
+    }
+
+    successMessage.classList.remove("hidden");
+
+    cart = {};
+    saveCart();
+    renderCart();
+    orderForm.reset();
+  });
+}
+
 renderProducts();
 renderCart();
+setupModalEvents();
+setupForm();

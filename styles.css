@@ -65,7 +65,6 @@ p {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 1rem;
-  padding: 1rem;
   box-shadow: var(--shadow);
 }
 
